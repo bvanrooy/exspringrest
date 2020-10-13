@@ -1,12 +1,14 @@
 package be.abis.exercise.model;
 
+import java.time.LocalDate;
+
 public class Person {
 	
 	private int personId;
 
 	private String firstName;
 	private String lastName;
-	private int age;
+	private LocalDate age;
 	private String emailAddress;
 	private String password;
 	private String language;
@@ -31,10 +33,10 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getAge() {
+	public LocalDate getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(LocalDate age) {
 		this.age = age;
 	}
 

@@ -56,13 +56,8 @@ public class PersonController {
 		personService.deletePerson(id);
 	}
 	
-	@GetMapping("/persons/{email}/{pwd}")
-	public Person findPersonByEmailAndPassword(@PathVariable("email") String email, @PathVariable("pwd") String pwd) {
-		return personService.findPerson(email, pwd);
-	}
-	
-	
-	@PutMapping("/persons")
+		
+	@PostMapping("/persons/login")
 	public Person login(@RequestBody Login login) {
 		return personService.login(login);
 	}

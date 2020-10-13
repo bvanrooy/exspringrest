@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import be.abis.exercise.exception.PersonCanNotBeDeletedException;
+import be.abis.exercise.model.Login;
 import be.abis.exercise.model.Person;
 import be.abis.exercise.repository.PersonRepository;
 
@@ -48,6 +49,11 @@ public class AbisPersonService implements PersonService {
 	@Override
 	public void changePassword(Person p, String newPswd) throws IOException {
 		personRepository.changePassword(p, newPswd);		
+	}
+
+	@Override
+	public Person login(Login login) {
+		return this.findPerson(login.getEmailAddress(), login.getPassword());
 	}
 
 }

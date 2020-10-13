@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,23 +29,29 @@ public class PersonController {
 		return personService.findPerson(id);
 	}
 	
-	@PostMapping("/persons/add")
+	@PostMapping("/persons")
 	public void addPerson(@RequestBody Person person) throws IOException {
 		personService.addPerson(person);
 	}
 	
-	@GetMapping("/persons/all")
+	@GetMapping("/persons")
 	public List<Person> getAllPersons(){
 		return personService.getAllPersons();
 	}
 	
-	@PostMapping("/persons/changepwd")
-	public void changePassword(@RequestBody Person person) throws IOException {
-		String newPswd = person.getPassword(); 
-		personService.changePassword(person,newPswd);
+	@PutMapping("/persons/{id}")
+	public void changePassword(@PathVariable("id") int id, @RequestBody Person person) throws Exception {
+		Person personFound = personService.findPerson(id);
+		if(personFound.getPersonId()==person.getPersonId()) {
+			String newPswd = person.getPassword(); 
+			personService.changePassword(person,newPswd);
+		}
+		else {
+			throw new Exception("In correct data");
+		}
 	}
 	
-	@PostMapping("/persons/delete/{id}")
+	@DeleteMapping("/persons/{id}")
 	public void deletePerson(@PathVariable("id") int id) throws PersonCanNotBeDeletedException {
 		personService.deletePerson(id);
 	}
@@ -53,7 +61,8 @@ public class PersonController {
 		return personService.findPerson(email, pwd);
 	}
 	
-	@PostMapping("/persons/login")
+	
+	@PutMapping("/persons")
 	public Person login(@RequestBody Login login) {
 		return personService.login(login);
 	}
